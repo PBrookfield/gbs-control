@@ -370,9 +370,11 @@ void OLEDMenuManager::tick(OLEDMenuNav nav)
     unsigned long curMili = millis();
     if (nav == OLEDMenuNav::IDLE) {
         if (curMili - lastKeyPressedTime > OLED_MENU_SCREEN_SAVER_KICK_IN_SECONDS * 1000) {
-            if (curMili - screenSaverLastUpdateTime > OLED_MENU_SCREEN_SAVER_REFRESH_INTERVAL_IN_MS) {
-                drawScreenSaver();
-                screenSaverLastUpdateTime = curMili;
+            // if (curMili - screenSaverLastUpdateTime > OLED_MENU_SCREEN_SAVER_REFRESH_INTERVAL_IN_MS) {
+            //    drawScreenSaver();
+            //    screenSaverLastUpdateTime = curMili;
+            if (!(this->displayOff)) {
+              this->turnDisplayOff();
             }
             return;
         } else if (curMili - this->lastUpdateTime < OLED_MENU_REFRESH_INTERVAL_IN_MS) {
@@ -383,12 +385,21 @@ void OLEDMenuManager::tick(OLEDMenuNav nav)
     }
     switch (nav) {
         case OLEDMenuNav::UP:
+            if (this->displayOff) {
+              this->turnDisplayOn();
+            }
             prevItem();
             break;
         case OLEDMenuNav::DOWN:
+            if (this->displayOff) {
+              this->turnDisplayOn();
+            }
             nextItem();
             break;
         case OLEDMenuNav::ENTER:
+            if (this->displayOff) {
+              this->turnDisplayOn();
+            }
             if (itemUnderCursor) {
                 enterItem(itemUnderCursor, OLEDMenuNav::IDLE, true);
             } else {

@@ -4784,7 +4784,8 @@ void updateSpDynamic(boolean withCurrentVideoModeCheck)
                 //Serial.print(" (debug) ignoreBase: 0x");  Serial.println(ignoreLength,HEX);
                 uint16_t pllDiv = GBS::PLLAD_MD::read();
                 ignoreLength = ignoreLength + (pllDiv * (ratioHs * 0.38)); // for factor: crtemudriver tests
-                //SerialM.print(" (debug) ign.length: 0x"); SerialM.println(ignoreLength, HEX);
+                //SerialM.print(" (debug) ign.length: 0x");
+                SerialM.println(ignoreLength, HEX);
 
                 // > check relies on sync instability (potentially from too large ign. length) getting cought earlier
                 if (ignoreLength > GBS::SP_H_PULSE_IGNOR::read() || GBS::SP_H_PULSE_IGNOR::read() >= 0x90) {
