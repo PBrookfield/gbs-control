@@ -43,6 +43,7 @@ private:
     const uint8_t *font;
     char statusBarBuffer[16];
     bool disabled;
+    bool displayOff;
     friend void setup();
 
     void resetScroll();
@@ -137,10 +138,23 @@ public:
     void disable()
     {
         this->disabled = true;
+        this->display->displayOff();
     }
     void enable()
     {
         this->disabled = false;
+        this->display->displayOn();
+    }
+
+    void turnDisplayOff()
+    {
+        this->displayOff = true;
+        this->display->displayOff();
+    }
+    void turnDisplayOn()
+    {
+        this->displayOff = false;
+        this->display->displayOn();
     }
 };
 #endif
