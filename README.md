@@ -1,4 +1,8 @@
-# gbs-control
+# gbs-control for Checkmate Monitors
+
+**This is a modification of the gbs-control firmware, containing specific changes that were made with the [Checkmate Retro Monitor](https://checkmate1500plus.com/IntroductionDisplays.aspx) in mind.**
+
+***Please be aware that some changes made may be detrimental when used with other GBS-Control compatible hardware, as some of the tunings made are dialed in quite hard according to the capability of Appy's Retro Scalar - which is the GBS-Control scaler module for the Checkmate monitor.***
 
 Documentation: https://ramapcsx2.github.io/gbs-control/
 
