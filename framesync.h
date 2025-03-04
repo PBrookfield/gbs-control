@@ -622,7 +622,11 @@ public:
         // To ensure long-term FPS stability, clamp the maximum deviation from
         // input FPS to 0.06%. This is sufficient as long as fpsInput does not
         // vary drastically from frame to frame.
-        constexpr float MAX_CORRECTION = 0.0006f;
+        //constexpr float MAX_CORRECTION = 0.0006f;
+
+        // Checkmate monitor tuning: We can accept a much larger step in timing safely
+        constexpr float MAX_CORRECTION = 0.1f;
+
         if (correction > MAX_CORRECTION) correction = MAX_CORRECTION;
         if (correction < -MAX_CORRECTION) correction = -MAX_CORRECTION;
 
@@ -637,7 +641,13 @@ public:
         // the impact of incorrect input FPS measurements, clamp the maximum FPS
         // deviation relative to the previous frame's *output* FPS. This
         // provides short-term FPS stability.
-        constexpr float MAX_FPS_CHANGE = 0.0006f;
+        // constexpr float MAX_FPS_CHANGE = 0.0006f;
+
+        // Checkmate monitor tuning: Needs more testing, but we see frame tearing
+        // much, much more often and usually immediately, so we prefer to arrive at
+        // our 'stable' sync lock more quickly
+        constexpr float MAX_FPS_CHANGE = 0.02f;
+        
         float fpsOutput = rawFpsOutput;
         fpsOutput = std::min(fpsOutput, prevFpsOutput * (1 + MAX_FPS_CHANGE));
         fpsOutput = std::max(fpsOutput, prevFpsOutput * (1 - MAX_FPS_CHANGE));

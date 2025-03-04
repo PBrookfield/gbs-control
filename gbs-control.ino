@@ -284,10 +284,18 @@ struct FrameSyncAttrs
 {
     static const uint8_t debugInPin = DEBUG_IN_PIN;
     static const uint32_t lockInterval = 100 * 16.70; // every 100 frames
-    static const int16_t syncCorrection = 2;          // Sync correction in scanlines to apply when phase lags target
+    //static const int16_t syncCorrection = 2;        // Sync correction in scanlines to apply when phase lags target
+
+    static const int16_t syncCorrection = 8;  // Checkmate monitor tuning: Correct from bad timing locks more quickly
+
     static const int32_t vsyncTargetPhase = 90;       // Target vsync phase offset (output trails input) in degrees
-                                                      // to debug: syncTargetPhase = 343 lockInterval = 15 * 16
-    static const int32_t freqSyncTargetPhase = 45;    // Target phase offset when using more precise frequency-based mode
+                                                      // to debug: syncTargetPhase = 343 lockInterval = 15 * 16    
+    //static const int32_t freqSyncTargetPhase = 45;  // Target phase offset when using more precise frequency-based mode
+
+    // Checkmate monitor tuning: We don't have any room at the top of the frame, we will always see tearing there.
+    // Prefer to start drawing a new frame at the bottom of the last frame, as this is still only a single frame's
+    // worth of latency on our scaler implementation.
+    static const int32_t freqSyncTargetPhase = 350;
 };
 typedef FrameSyncManager<GBS, FrameSyncAttrs> FrameSync;
 
